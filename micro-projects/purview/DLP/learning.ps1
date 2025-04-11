@@ -2,10 +2,10 @@
 Connect-IPPSSession -UserPrincipalName mhebert@klabmtl.ca 
 
 # TARGET =>
-#DLP Policy:
-#   Canada PII (EXO, SPO, ODB & Teams dans une policy)
-#       DLP Rule:
-#           - ExternalShare
+#   DLP Policy:
+#       Canada PII (EXO, SPO, ODB & Teams dans une policy)
+#           DLP Rule:
+#               - ExternalShare
 Get-DlpCompliancePolicy
 Get-DlpCompliancePolicy -Identity "Canada PII"
 
@@ -13,10 +13,11 @@ Get-DlpComplianceRule -Policy "Canada PII"
 Get-DlpComplianceRule -Identity "ExternalShare"
 
 
-# Variables + output json file
-$ExternalShare = Get-DlpComplianceRule -Identity "ExternalShare"
-$ExternalShareAdvancedRule = Get-DlpComplianceRule -Identity "ExternalShare" | fl AdvancedRule
-$ExternalShareAdvancedRule > ExternalShareAdvancedRule.json
+# Aller chercher AdvancedRule dans la Rule et sauvegarder en JSON
+$Rule = Get-DlpComplianceRule -Identity "ExternalShare"
+$AdvancedRule = $Rule.AdvancedRule
+$AdvancedRule > AdvancedRule.json
+
 
 # Lister les SITs, filtrer sur ceux créer par l'organisation
 Get-DlpSensitiveInformationType
@@ -25,13 +26,13 @@ Get-DlpSensitiveInformationType -Identity "NAS by DataShieldDivine"
 
 
 # Update DLP rule
-$data = Get-Content -Path "C:\Users\marc-antoinehebert\Downloads\road-to-builder\micro-projects\purview\DLP\Rule\AdvancedRule\Canada PII\ExternalShare.json" -ReadCount 0
-$string = $data | Out-string
-Set-DLPComplianceRule -Identity "ExternalShare" -AdvancedRule $string
+$Data = Get-Content -Path "C:\Users\marc-antoinehebert\Downloads\road-to-builder\micro-projects\purview\DLP\Rule\AdvancedRule\Canada PII\ExternalShare.json" -ReadCount 0
+$String = $Data | Out-string
+Set-DLPComplianceRule -Identity "ExternalShare" -AdvancedRule $String
 
 
 # Créer une nouvelle DLP rule
-$data = Get-Content -Path "C:\Users\marc-antoinehebert\Downloads\road-to-builder\micro-projects\purview\DLP\Rule\AdvancedRule\Canada PII\ExternalShare.json" -ReadCount 0
-$string = $data | Out-string
-New-DLPComplianceRule -Name "Nouvelle Rule" -Policy "Canada PII" -AdvancedRule $string
+$Data = Get-Content -Path "C:\Users\marc-antoinehebert\Downloads\road-to-builder\micro-projects\purview\DLP\Rule\AdvancedRule\Canada PII\ExternalShare.json" -ReadCount 0
+$String = $Data | Out-string
+New-DLPComplianceRule -Name "Nouvelle Rule" -Policy "Canada PII" -AdvancedRule $String
 

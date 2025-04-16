@@ -1,5 +1,5 @@
 # Se placer dans le dossier du module
-New-ModuleManifest -Path .\DLP.psd1 -RootModule DLP.psm1 -Author "Votre nom" -Description "Module pour la création et gestion de politiques DLP" -FunctionsToExport @(
+New-ModuleManifest -Path .\Dlp.psd1 -RootModule Dlp.psm1 -Author "Marc-Antoine Hebert" -Description "Module pour la création et gestion de politiques DLP" -FunctionsToExport @(
     'Get-PolicyBasicInfo',
     'Get-PolicyMode',
     'Get-PolicyLocations',
